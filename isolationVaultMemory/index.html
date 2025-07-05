@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>격리금고 메모리</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <button onclick="reset()">Reset</button>
+        <div class="result-container"></div>
+        <DIV class="horizontal-container">
+
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx1"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx2"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx3"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx4"></div>
+                </div>
+
+            </div>
+        </DIV>
+        <DIV class="horizontal-container">
+
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx5"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx6"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx7"></div>
+                </div>
+
+            </div>
+            <div class="char-container">
+                <div class="char-sub" onclick="toggle(this)">
+                    <div class="char idx8"></div>
+                </div>
+            </div>
+        </DIV>
+    </div>
+</body>
+
+</html>
+<style>
+    body {
+        margin: 0;
+        max-width: 100vw;
+        max-height: 100vh;
+        overflow: hidden;
+        padding: 10vw;
+        display: flex;
+        width: 80vw;
+        font-family: 'Arial', sans-serif;
+        background-color: #2c2c2c;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .container {
+        width: min(80vh, 80vw);
+        max-height: 100vh;
+
+        /* padding: 10vw; */
+
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+        align-content: center;
+
+    }
+
+    .result-container {
+        display: flex;
+        width: 100%;
+        height: min(20vw, 20vh);
+        border: 1px solid rgb(29, 6, 6);
+        background-color: rgb(61, 37, 37);
+        margin-bottom: 3vh;
+        flex-direction: row;
+        align-items: center;
+
+    }
+
+    .horizontal-container {
+        display: flex;
+
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .char-sub {
+        background-color: rgb(43, 7, 7);
+        width: min(20vw, 20vh);
+    }
+
+    .char-sub.selected {
+        background-color: rgb(108 40 40);
+    }
+
+    .char-sub:hover {
+        background-color: rgb(156, 62, 62);
+        cursor: pointer;
+    }
+
+    .char-container {
+
+        margin-bottom: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .char {
+        width: min(20vw, 20vh);
+        height: min(20vw, 20vh);
+        border: 1px solid white;
+
+
+    }
+
+    .char[class*="idx"] {
+        background-size: cover;
+        filter: invert()
+    }
+
+    .char.idx1 {
+        background-image: url("./resource/1.webp");
+    }
+
+    .char.idx2 {
+        background-image: url("./resource/2.webp");
+    }
+
+    .char.idx3 {
+        background-image: url("./resource/3.webp");
+    }
+
+    .char.idx4 {
+        background-image: url("./resource/4.webp");
+    }
+
+    .char.idx5 {
+        background-image: url("./resource/5.webp");
+    }
+
+    .char.idx6 {
+        background-image: url("./resource/6.webp");
+    }
+
+    .char.idx7 {
+        background-image: url("./resource/7.webp");
+    }
+
+    .char.idx8 {
+        background-image: url("./resource/8.webp");
+    }
+
+
+
+    .idx {
+        display: flex;
+
+        /* border: 1px solid red; */
+        color: white;
+        width: 10vw;
+        height: 10vw;
+        margin-bottom: 2vw;
+        background-color: #007bff;
+        border-radius: 50%;
+        align-content: center;
+        align-items: center;
+        font-size: 2em
+    }
+
+    button {
+        position: absolute;
+        top: 20px;
+        /* left: 20px; */
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #660f1e;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function toggle(el) {
+
+        const resultContainer = document.querySelector('.result-container');
+        var idxed = el.querySelector("div").classList[1]
+        var resultEl = document.querySelector('.result-container .' + idxed)
+
+        if (el.parentElement == resultContainer) {
+
+
+
+            document.querySelector('.horizontal-container .' + idxed).parentElement.classList.remove("selected")
+            el.remove()
+            return false
+        }
+
+        if (el.classList.contains('selected')) {
+            el.classList.remove('selected')
+
+            resultEl.parentElement.remove()
+        }
+
+        else if (resultContainer.querySelectorAll('.char-sub').length <= 3) {
+
+            var cloneEl = el.cloneNode(true);
+            resultContainer.appendChild(cloneEl);
+            cloneEl.classList.add('selected');
+            el.classList.add('selected');
+        }
+
+
+    }
+
+    function reset(){
+        document.querySelectorAll(".result-container > div").forEach(el=>el.remove())
+        document.querySelectorAll(".selected").forEach(el=>el.classList.remove("selected"))
+    }
+</script>
